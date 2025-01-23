@@ -10,7 +10,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "predeply": "npm run build",
-    "deploy": "ghpages -d distgit"
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "@motionone/utils": "^10.17.0",
