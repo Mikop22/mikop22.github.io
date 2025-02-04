@@ -24,25 +24,22 @@ const ProjectCard = ({ project }: { project: Project }) => {
       onMouseLeave={() => setIsHovered(false)}
     >
       <div className="absolute inset-0">
-        <video
-          autoPlay
-          muted
-          loop
-          playsInline
-          className={`w-full h-full object-cover transition-opacity duration-300 ${
-            isHovered ? 'opacity-0' : 'opacity-100'
-          }`}
-        >
-          <source src={project.video} type="video/mp4" />
-        </video>
-
-        <div
-          className={`absolute inset-0 bg-cover bg-center transition-opacity duration-300 ${
-            isHovered ? 'opacity-100' : 'opacity-0'
-          }`}
-          style={{ backgroundImage: `url(${project.image})` }}
-        />
-      </div>
+        {isHovered ? (
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="w-full h-full object-cover transition-opacity duration-500 ease-in-out will-change-opacity">
+            <source src={project.video} type="video/mp4" />
+          </video>
+        ) : (
+          <div
+            className="absolute inset-0 bg-cover bg-center transition-all duration-500 ease-in-out will-change-opacity transform hover:scale-105"
+            style={{ backgroundImage: `url(${project.image})` }}
+          />
+        )}
+          </div>
 
       <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
         <div className="text-center">
@@ -84,13 +81,6 @@ function App() {
       type: 'iphone',
       image: '/images/DelicioPic.png',
       video: '/images/DelicioVid.mp4',
-    },
-    {
-      id: 3,
-      title: 'Mobile App 3',
-      type: 'iphone',
-      image: 'your-app3-thumbnail.jpg',
-      video: 'your-app3-demo.mp4',
     },
   ];
 
