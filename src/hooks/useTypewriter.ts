@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+// No need to import NodeJS, it's a global namespace
 
 export function useTypewriter(phrases: string[], typingSpeed = 100, deletingSpeed = 50, pauseDuration = 2000) {
   const [text, setText] = useState('');
@@ -7,7 +8,7 @@ export function useTypewriter(phrases: string[], typingSpeed = 100, deletingSpee
 
   useEffect(() => {
     const currentPhrase = phrases[phraseIndex];
-    let timeout: NodeJS.Timeout;
+    let timeout: ReturnType<typeof setTimeout>;
 
     if (isTyping) {
       if (text.length < currentPhrase.length) {
