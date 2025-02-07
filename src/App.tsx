@@ -147,7 +147,7 @@ function App() {
     {
       id: '1',
       title: 'Dlicio',
-      description: 'Tiktok meets Uber Eats. A social food delivery app.',
+      description: 'Tiktok meets food delivery. A social food delivery app.',
       image: 'images/DelicioPic.png',
       video: 'images/DelicioVid.mp4',  
       url: 'https://dlicio.com',
@@ -234,7 +234,7 @@ function App() {
           </motion.a>
         </div>
         <motion.a
-          href="/path-to-your-resume.pdf"
+          href="/Mikhai Wilson Resume SoftENG.pdf"
           download
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
