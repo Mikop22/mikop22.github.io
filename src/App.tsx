@@ -176,11 +176,11 @@ function App() {
 
   const experiences = [
     {
-      company: "To Be Determined",
-      role: "Software Engineer Intern",
+      company: "Bruce Power",
+      role: "Software Engineering Intern - Regulatory Affairs",
       period: "May 2025 - August 2025",
       description:
-        "Stay tuned...",
+        "Incoming Summer 2025",
     },
     {
       company: "Dlicio",
