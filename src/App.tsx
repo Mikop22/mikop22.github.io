@@ -187,7 +187,7 @@ function App() {
       role: "Founder and CEO",
       period: "Febuary 2024 - Present",
       description:
-        "Developing a new food delivery app, Delicio to help local restaurants and foodies connect.",
+        "Developing a new food delivery app to help local restaurants and foodies connect using short form content.",
     },
     {
       company: "Computers For Kids Halton",
