@@ -3,6 +3,8 @@ import { motion } from 'framer-motion';
 import { ChevronDown, Github, Linkedin, Download, Play } from 'lucide-react';
 import { useTypewriter } from './hooks/useTypewriter';
 import { Helmet } from 'react-helmet-async';
+import { AnimatePresence } from 'framer-motion';
+
 interface Project {
   id: string;
   title: string;
@@ -12,6 +14,25 @@ interface Project {
   video?: string;  // Optional video URL
   buttonText?: string; // Add optional button text
 }
+
+// New variant for the project button animation
+const buttonVariants = {
+	initial: {},
+	hover: {
+		scale: 1.1,
+		backgroundColor: '#f0f0f0',
+		transition: {
+			duration: 0.3,
+			type: 'spring'
+		}
+	}
+};
+
+// New squishy button variant
+const squishyButtonVariants = {
+	hover: { scale: 1.08, transition: { duration: 0.2 } },
+	tap: { scaleX: 0.95, scaleY: 0.85, transition: { type: 'spring', stiffness: 300, damping: 5 } },
+};
 
 const ProjectCard = ({ project }: { project: Project }) => {
   const [isActive, setIsActive] = useState(false);
@@ -124,8 +145,9 @@ const ProjectCard = ({ project }: { project: Project }) => {
         <p className="text-gray-400 mb-2">{project.description}</p>
         <motion.a
           href={project.url}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
+          variants={squishyButtonVariants}       // <-- New squishy variant
+          whileHover="hover"                      // <-- New hover state
+          whileTap="tap"                          // <-- New tap state for squishy effect
           className="inline-block px-6 py-2 bg-white text-black rounded-md text-sm font-medium w-fit"
         >
           {project.buttonText || 'Learn More'}
@@ -133,6 +155,18 @@ const ProjectCard = ({ project }: { project: Project }) => {
       </div>
     </motion.div>
   );
+};
+
+// Define animation variants
+const sectionVariants = {
+	hidden: { opacity: 0, y: 20 },
+	visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
+};
+
+// New variant for list items
+const itemVariants = {
+	hidden: { opacity: 0, y: 10 },
+	visible: { opacity: 1, y: 0, transition: { duration: 0.4 } },
 };
 
 function App() {
@@ -167,11 +201,23 @@ function App() {
     {
       id: '3',
       title: 'Carleton Scheduler',
-      description: 'A Study Scheduler app for Carleton University',
+      description: 'A Study Scheduler app',
       image: '/images/CarletonApp_Pic.png',
       url: 'https://github.com/Mikop22/CarletonStudy',
       buttonText: 'See Code'
     },
+  ];
+
+  // New state to track selected category tab.
+  const [selectedTab, setSelectedTab] = useState('Mobile Apps');
+
+  // Group projects by category.
+  const projectCategories = [
+    { name: 'Mobile Apps', projects: mobileProjects },
+    { name: 'C++', projects: [] },
+    { name: 'Python', projects: [] },
+    { name: 'JS/TS', projects: desktopProjects},
+    { name: 'AI/ML', projects: [] },
   ];
 
   const experiences = [
@@ -209,8 +255,12 @@ function App() {
         <meta name="theme-color" content="#000000" />
       </Helmet>
       
-      {/* Add header */}
-      <header className="fixed top-0 left-0 right-0 z-50 p-6 flex justify-between items-center">
+      {/* Updated Header with animation */}
+      <motion.header 
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0, transition: { duration: 0.6 } }}
+        className="fixed top-0 left-0 right-0 z-50 p-6 flex justify-between items-center"
+      >
         <div className="flex gap-4">
           <motion.a
             href="https://github.com/mikop22"
@@ -243,9 +293,15 @@ function App() {
           <Download size={16} />
           Download Resume
         </motion.a>
-      </header>
+      </motion.header>
 
-      <section className="h-screen relative overflow-hidden bg-black">
+      {/* Hero Section with animation */}
+      <motion.section 
+        initial="hidden"
+        animate="visible"
+        variants={sectionVariants}
+        className="h-screen relative overflow-hidden bg-black"
+      >
         <div className="absolute inset-0 md:inset-0">
           {/* Mobile-optimized container with top spacing */}
           <div className="relative h-full w-full md:w-full">
@@ -272,7 +328,9 @@ function App() {
             className="max-w-screen-xl mx-auto w-full"
           >
             <div className="md:ml-0 space-y-4">
-              <h1 className="text-4xl md:text-6xl font-bold">Hello, I'm Mikhai</h1>
+              <h1 className="text-4xl md:text-6xl font-bold">
+                Hello, I'm <span className="text-blue-300">Mikhai</span>
+              </h1>
               <div className="text-xl text-gray-400 h-8 flex items-center">
                 <span>{typedText}</span>
                 <motion.span
@@ -302,36 +360,74 @@ function App() {
             <ChevronDown size={32} />
           </motion.div>
         </div>
-      </section>
+      </motion.section>
 
-      <section className="py-20 px-4 md:px-8 bg-black">
+      {/* Projects Section with added item animation */}
+      <motion.section 
+        initial="hidden"
+        animate="visible"
+        variants={sectionVariants}
+        className="py-20 px-4 md:px-8 bg-black"
+      >
         <div className="max-w-screen-xl mx-auto">
-          <h2 className="text-4xl font-bold mb-12">Recent Projects</h2>
+          <h2 className="text-4xl font-bold mb-8">Recent Projects</h2>
+
+          {/* Tabs for project categories */}
+          <div className="mb-8 flex space-x-4">
+            {projectCategories.map((cat) => (
+              <button
+                key={cat.name}
+                onClick={() => setSelectedTab(cat.name)}
+                className={`px-4 py-2 rounded-md ${
+                  selectedTab === cat.name ? 'bg-white text-black' : 'bg-gray-800 text-white'
+                }`}
+              >
+                {cat.name}
+              </button>
+            ))}
+          </div>
+
+          {/* Display projects belonging to the selected tab */}
           <div className="grid grid-cols-12 gap-8">
-            {/* Mobile projects - spans 8 columns */}
-            <div className="col-span-12 md:col-span-8 grid grid-cols-2 gap-8">
-              {mobileProjects.map(project => (
-                <ProjectCard key={project.id} project={project} />
-              ))}
-            </div>
-            
-            {/* Stack of desktop projects - spans 4 columns */}
-            <div className="col-span-12 md:col-span-4 space-y-8">
-              {desktopProjects.map(project => (
-                <ProjectCard key={project.id} project={project} />
-              ))}
-            </div>
+            {(
+              projectCategories.find((cat) => cat.name === selectedTab)?.projects || []
+            ).length > 0 ? (
+              <div className="col-span-12 grid grid-cols-2 gap-8">
+                {projectCategories.find((cat) => cat.name === selectedTab)!.projects.map((project) => (
+                  <motion.div 
+                    key={project.id}
+                    initial="hidden"
+                    animate="visible"
+                    variants={itemVariants}
+                    className={selectedTab === 'Mobile Apps' ? "md:max-w-xs mx-auto" : ""}
+                  >
+                    <ProjectCard project={project} />
+                  </motion.div>
+                ))}
+              </div>
+            ) : (
+              <p className="col-span-12 text-gray-400">No projects found for this category.</p>
+            )}
           </div>
         </div>
-      </section>
+      </motion.section>
 
-      <section className="py-20 px-4 md:px-8 bg-black/90">
+      {/* Experience Section with staggered item animation */}
+      <motion.section 
+        initial="hidden"
+        animate="visible"
+        variants={sectionVariants}
+        className="py-20 px-4 md:px-8 bg-black/90"
+      >
         <div className="max-w-screen-xl mx-auto">
           <h2 className="text-4xl font-bold mb-12">Experience</h2>
           <div className="space-y-8">
             {experiences.map((exp, index) => (
-              <div
+              <motion.div
                 key={index}
+                initial="hidden"
+                animate="visible"
+                variants={itemVariants}
                 className="bg-gray-900/50 rounded-lg p-6 hover:bg-gray-800/50 transition-colors duration-300"
               >
                 <h3 className="text-xl font-bold text-white mb-1">{exp.company}</h3>
@@ -340,11 +436,11 @@ function App() {
                   <span className="text-gray-500">{exp.period}</span>
                 </div>
                 <p className="text-gray-300">{exp.description}</p>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
-      </section>
+      </motion.section>
     </div>
   );
 }
