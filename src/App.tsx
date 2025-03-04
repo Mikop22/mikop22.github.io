@@ -10,12 +10,20 @@ interface Project {
   title: string;
   description: string;
   image: string;
-  url: string; // Add URL to interface
-  video?: string;  // Optional video URL
-  buttonText?: string; // Add optional button text
+  url: string; 
+  video?: string; 
+  buttonText?: string; 
 }
 
-// New variant for the project button animation
+// Add this near the top of your file with other interfaces
+interface Experience {
+  company: string;
+  role: string;
+  period: string;
+  description: string;
+  logo: string;
+}
+
 const buttonVariants = {
 	initial: {},
 	hover: {
@@ -220,33 +228,33 @@ function App() {
     { name: 'AI/ML', projects: [] },
   ];
 
-  const experiences = [
+  const experiences: Experience[] = [
     {
       company: "Bruce Power",
       role: "Software Engineering Intern - Regulatory Affairs",
       period: "May 2025 - August 2025",
-      description:
-        "Incoming Summer 2025",
+      description: "Incoming Summer 2025",
+      logo: "/images/bruce-power-logo.png"  // Add your logo file
     },
     {
       company: "Dlicio",
       role: "Founder and CEO",
       period: "Febuary 2024 - Present",
-      description:
-        "Developing a new food delivery app to help local restaurants and foodies connect using short form content.",
+      description: "Developing a new food delivery app to help local restaurants and foodies connect using short form content.",
+      logo: "/images/dlicio-logo.png"  // Add your logo file
     },
     {
       company: "Computers For Kids Halton",
       role: "Co-founder",
       period: "June 2023 - July 2024",
-      description:
-        "Spearheaded charity that gave away laptops to children in need, including hardware and software repair, community outreach, and candidate interviewing.",
-    },
+      description: "Helped spearheaded charity that gave away laptops to children in need, including hardware and software repair, community outreach, and candidate interviewing.",
+      logo: "/images/cfk-logo.png"  // Add your logo file
+    }
   ];
 
   return (
     
-    <div className="min-h-screen text-white relative font-['Kanit']"> {/* Add your preferred font here */}
+    <div className="min-h-screen text-white relative font-['Kanit']"> {}
       <Helmet>
         <title>Mikhai Wilson | Portfolio</title>
         <meta name="description" content="Software Engineer & Data Scientist Portfolio" />
@@ -255,7 +263,7 @@ function App() {
         <meta name="theme-color" content="#000000" />
       </Helmet>
       
-      {/* Updated Header with animation */}
+      {}
       <motion.header 
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0, transition: { duration: 0.6 } }}
@@ -295,7 +303,7 @@ function App() {
         </motion.a>
       </motion.header>
 
-      {/* Hero Section with animation */}
+      {}
       <motion.section 
         initial="hidden"
         animate="visible"
@@ -303,7 +311,7 @@ function App() {
         className="h-screen relative overflow-hidden bg-black"
       >
         <div className="absolute inset-0 md:inset-0">
-          {/* Mobile-optimized container with top spacing */}
+          {}
           <div className="relative h-full w-full md:w-full">
             <div className="absolute inset-0 md:relative h-[70vh] md:h-full mt-20 md:mt-0">
               <video
@@ -362,7 +370,7 @@ function App() {
         </div>
       </motion.section>
 
-      {/* Projects Section with added item animation */}
+      {}
       <motion.section 
         initial="hidden"
         animate="visible"
@@ -372,7 +380,7 @@ function App() {
         <div className="max-w-screen-xl mx-auto">
           <h2 className="text-4xl font-bold mb-8">Recent Projects</h2>
 
-          {/* Tabs for project categories */}
+          {}
           <div className="mb-8 flex space-x-4">
             {projectCategories.map((cat) => (
               <button
@@ -387,7 +395,7 @@ function App() {
             ))}
           </div>
 
-          {/* Display projects belonging to the selected tab */}
+          {}
           <div className="grid grid-cols-12 gap-8">
             {(
               projectCategories.find((cat) => cat.name === selectedTab)?.projects || []
@@ -412,7 +420,7 @@ function App() {
         </div>
       </motion.section>
 
-      {/* Experience Section with staggered item animation */}
+      {}
       <motion.section 
         initial="hidden"
         animate="visible"
@@ -430,12 +438,23 @@ function App() {
                 variants={itemVariants}
                 className="bg-gray-900/50 rounded-lg p-6 hover:bg-gray-800/50 transition-colors duration-300"
               >
-                <h3 className="text-xl font-bold text-white mb-1">{exp.company}</h3>
-                <div className="flex flex-wrap justify-between items-center mb-3">
-                  <span className="text-gray-400 font-medium">{exp.role}</span>
-                  <span className="text-gray-500">{exp.period}</span>
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 flex-shrink-0">
+                    <img
+                      src={exp.logo}
+                      alt={`${exp.company} logo`}
+                      className="w-full h-full object-contain"
+                    />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-xl font-bold text-white mb-1">{exp.company}</h3>
+                    <div className="flex flex-wrap justify-between items-center mb-3">
+                      <span className="text-gray-400 font-medium">{exp.role}</span>
+                      <span className="text-gray-500">{exp.period}</span>
+                    </div>
+                    <p className="text-gray-300">{exp.description}</p>
+                  </div>
                 </div>
-                <p className="text-gray-300">{exp.description}</p>
               </motion.div>
             ))}
           </div>
