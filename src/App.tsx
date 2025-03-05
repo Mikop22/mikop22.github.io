@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { ChevronDown, Github, Linkedin, Download, Play } from 'lucide-react';
 import { useTypewriter } from './hooks/useTypewriter';
 import { Helmet } from 'react-helmet-async';
-import { AnimatePresence } from 'framer-motion';
+
 
 interface Project {
   id: string;
@@ -15,7 +15,7 @@ interface Project {
   buttonText?: string; 
 }
 
-// Add this near the top of your file with other interfaces
+
 interface Experience {
   company: string;
   role: string;
@@ -24,19 +24,6 @@ interface Experience {
   logo: string;
 }
 
-const buttonVariants = {
-	initial: {},
-	hover: {
-		scale: 1.1,
-		backgroundColor: '#f0f0f0',
-		transition: {
-			duration: 0.3,
-			type: 'spring'
-		}
-	}
-};
-
-// New squishy button variant
 const squishyButtonVariants = {
 	hover: { scale: 1.08, transition: { duration: 0.2 } },
 	tap: { scaleX: 0.95, scaleY: 0.85, transition: { type: 'spring', stiffness: 300, damping: 5 } },
@@ -153,9 +140,9 @@ const ProjectCard = ({ project }: { project: Project }) => {
         <p className="text-gray-400 mb-2">{project.description}</p>
         <motion.a
           href={project.url}
-          variants={squishyButtonVariants}       // <-- New squishy variant
-          whileHover="hover"                      // <-- New hover state
-          whileTap="tap"                          // <-- New tap state for squishy effect
+          variants={squishyButtonVariants}       
+          whileHover="hover"                      
+          whileTap="tap"                          
           className="inline-block px-6 py-2 bg-white text-black rounded-md text-sm font-medium w-fit"
         >
           {project.buttonText || 'Learn More'}
@@ -165,13 +152,12 @@ const ProjectCard = ({ project }: { project: Project }) => {
   );
 };
 
-// Define animation variants
 const sectionVariants = {
 	hidden: { opacity: 0, y: 20 },
 	visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
 };
 
-// New variant for list items
+
 const itemVariants = {
 	hidden: { opacity: 0, y: 10 },
 	visible: { opacity: 1, y: 0, transition: { duration: 0.4 } },
@@ -216,10 +202,10 @@ function App() {
     },
   ];
 
-  // New state to track selected category tab.
+  
   const [selectedTab, setSelectedTab] = useState('Mobile Apps');
 
-  // Group projects by category.
+  
   const projectCategories = [
     { name: 'Mobile Apps', projects: mobileProjects },
     { name: 'C++', projects: [] },
@@ -234,21 +220,21 @@ function App() {
       role: "Software Engineering Intern - Regulatory Affairs",
       period: "May 2025 - August 2025",
       description: "Incoming Summer 2025",
-      logo: "/images/bruce-power-logo.png"  // Add your logo file
+      logo: "/images/bruce-power-logo.png" 
     },
     {
       company: "Dlicio",
       role: "Founder and CEO",
       period: "Febuary 2024 - Present",
       description: "Developing a new food delivery app to help local restaurants and foodies connect using short form content.",
-      logo: "/images/dlicio-logo.png"  // Add your logo file
+      logo: "/images/dlicio-logo.png"  
     },
     {
       company: "Computers For Kids Halton",
       role: "Co-founder",
       period: "June 2023 - July 2024",
       description: "Helped spearheaded charity that gave away laptops to children in need, including hardware and software repair, community outreach, and candidate interviewing.",
-      logo: "/images/cfk-logo.png"  // Add your logo file
+      logo: "/images/cfk-logo.png"  
     }
   ];
 
@@ -261,6 +247,7 @@ function App() {
         <meta property="og:title" content="Mikhai Wilson | Portfolio" />
         <meta property="og:description" content="Software Engineer & Data Scientist Portfolio" />
         <meta name="theme-color" content="#000000" />
+        <link rel="icon" href="/images/logo.png"/>
       </Helmet>
       
       {}
@@ -414,7 +401,7 @@ function App() {
                 ))}
               </div>
             ) : (
-              <p className="col-span-12 text-gray-400">No projects found for this category.</p>
+              <p className="col-span-12 text-gray-400">N/A.</p>
             )}
           </div>
         </div>
