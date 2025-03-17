@@ -208,10 +208,9 @@ function App() {
   
   const projectCategories = [
     { name: 'Mobile Apps', projects: mobileProjects },
+    { name: 'JS/TS', projects: desktopProjects},
     { name: 'C++', projects: [] },
     { name: 'Python', projects: [] },
-    { name: 'JS/TS', projects: desktopProjects},
-    { name: 'AI/ML', projects: [] },
   ];
 
   const experiences: Experience[] = [
@@ -324,7 +323,7 @@ function App() {
           >
             <div className="md:ml-0 space-y-4">
               <h1 className="text-4xl md:text-6xl font-bold">
-                Hello, I'm <span className="text-blue-300">Mikhai</span>
+                Hello, I'm Mikhai
               </h1>
               <div className="text-xl text-gray-400 h-8 flex items-center">
                 <span>{typedText}</span>
